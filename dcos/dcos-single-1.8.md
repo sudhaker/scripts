@@ -189,3 +189,5 @@ dcos marathon app add dockercloud-hello-world.json
 
 > Browse to => http://192.168.0.173:10000/
 
+> HAProxy stats at http://192.168.0.173:9090/haproxy?stats
+
