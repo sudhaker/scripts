@@ -6,7 +6,6 @@
 - One VM only! (for a resource constrained lab or laptop)
 - CentOS 7.2 Minimal + SELINUX Disabled + Firewall Disabled + IPv6 Disabled
 - Docker 1.11.X with "--storage-driver=overlay"
-- Catch-all DNS *.a142.sudhaker.com => 192.168.0.142
 
 ### Configuration
 | Host | Role | VM Size |
