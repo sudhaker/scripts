@@ -1,85 +1,90 @@
+# This compose file will start 4 hyperledger peer nodes + 1 CA node.
+# We add a delay to start the VP nodes after CA node:
+# command: sh -c "sleep 5; peer node start"
+#
+#  vp0: validating node as root
+#  vp1: validating node as peer
+#  vp2: validating node as peer
+#  vp3: validating node as peer
+# https://github.com/yeasy/docker-compose-files
+
 membersrvc:
-  image: hyperledger/fabric-membersrvc
-  ports:
-    - "7054:7054"
-  command: membersrvc
+  image: hyperledger/fabric-membersrvc:latest
+  restart: unless-stopped
+  expose:
+    - "7054"
+  volumes: # docker.sock is mapped as the default CORE_VM_ENDPOINT
+    - /var/run/docker.sock:/var/run/docker.sock
+  command: membersrvc  # this repeats the default cmd to make sure
+
+# validating node as the root
 vp0:
-  image: hyperledger/fabric-peer
+  extends:
+    file: peer-pbft.yml
+    service: vp_sec
+  hostname: vp0
+  environment:
+    - CORE_PEER_ID=vp0
+    - CORE_SECURITY_ENROLLID=test_vp0
+    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT
   ports:
     - "7050:7050"
     - "7051:7051"
-    - "7053:7053"
-  environment:
-    - CORE_PEER_ADDRESSAUTODETECT=true
-    - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
-    - CORE_LOGGING_LEVEL=DEBUG
-    - CORE_PEER_ID=vp0
-    - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
-    - CORE_SECURITY_ENABLED=true
-    - CORE_SECURITY_ENROLLID=test_vp0
-    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT
   links:
     - membersrvc
-  command: sh -c "sleep 5; peer node start --peer-chaincodedev"
+  command: sh -c "sleep 5; peer node start"
+
+# other validating nodes
 vp1:
-  image: hyperledger/fabric-peer
+  extends:
+    file: peer-pbft.yml
+    service: vp_sec
+  hostname: vp1
+  environment:
+    - CORE_PEER_ID=vp1
+    - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+    - CORE_SECURITY_ENROLLID=test_vp1
+    - CORE_SECURITY_ENROLLSECRET=5wgHK9qqYaPy
   ports:
     - "7150:7050"
     - "7151:7051"
-    - "7153:7053"
-  environment:
-    - CORE_PEER_ADDRESSAUTODETECT=true
-    - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
-    - CORE_LOGGING_LEVEL=DEBUG
-    - CORE_PEER_ID=vp1
-    - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
-    - CORE_SECURITY_ENABLED=true
-    - CORE_SECURITY_ENROLLID=test_vp1
-    - CORE_SECURITY_ENROLLSECRET=5wgHK9qqYaPy
   links:
     - membersrvc
-  command: sh -c "sleep 5; peer node start --peer-chaincodedev"
+    - vp0
+  command: sh -c "sleep 5; peer node start"
+
 vp2:
-  image: hyperledger/fabric-peer
+  extends:
+    file: peer-pbft.yml
+    service: vp_sec
+  hostname: vp2
+  environment:
+    - CORE_PEER_ID=vp2
+    - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+    - CORE_SECURITY_ENROLLID=test_vp2
+    - CORE_SECURITY_ENROLLSECRET=vQelbRvja7cJ
   ports:
     - "7250:7050"
     - "7251:7051"
-    - "7253:7053"
-  environment:
-    - CORE_PEER_ADDRESSAUTODETECT=true
-    - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
-    - CORE_LOGGING_LEVEL=DEBUG
-    - CORE_PEER_ID=vp2
-    - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
-    - CORE_SECURITY_ENABLED=true
-    - CORE_SECURITY_ENROLLID=test_vp2
-    - CORE_SECURITY_ENROLLSECRET=vQelbRvja7cJ
   links:
     - membersrvc
-  command: sh -c "sleep 5; peer node start --peer-chaincodedev"
+    - vp0
+  command: sh -c "sleep 5; peer node start"
+
 vp3:
-  image: hyperledger/fabric-peer
+  extends:
+    file: peer-pbft.yml
+    service: vp_sec
+  hostname: vp3
+  environment:
+    - CORE_PEER_ID=vp3
+    - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+    - CORE_SECURITY_ENROLLID=test_vp3
+    - CORE_SECURITY_ENROLLSECRET=9LKqKH5peurL
   ports:
     - "7350:7050"
     - "7351:7051"
-    - "7353:7053"
-  environment:
-    - CORE_PEER_ADDRESSAUTODETECT=true
-    - CORE_VM_ENDPOINT=unix:///var/run/docker.sock
-    - CORE_LOGGING_LEVEL=DEBUG
-    - CORE_PEER_ID=vp3
-    - CORE_PEER_PKI_ECA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TCA_PADDR=membersrvc:7054
-    - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
-    - CORE_SECURITY_ENABLED=true
-    - CORE_SECURITY_ENROLLID=test_vp3
-    - CORE_SECURITY_ENROLLSECRET=9LKqKH5peurL
   links:
     - membersrvc
-  command: sh -c "sleep 5; peer node start --peer-chaincodedev"
+    - vp0
+  command: sh -c "sleep 5; peer node start"
