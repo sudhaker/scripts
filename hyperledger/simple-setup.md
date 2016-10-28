@@ -1,16 +1,16 @@
 ## Setup a Hyperledger Fabric Cluster (4 nodes) using Docker
 
-Download the required `docker-compose.yml` file
+### Download the required `docker-compose.yml` file
 ```
 curl -sO https://raw.githubusercontent.com/sudhaker/scripts/master/hyperledger/compose/docker-compose.yml
 ```
 
-Let compose start it.
+### Let compose start it.
 ```
 docker-compose up -d
 ```
 
-Wait for few seconds and verify
+### Wait for few seconds and verify
 ```
 [root@centos72 hyperledger]# docker ps
 CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                                                    NAMES
@@ -21,7 +21,7 @@ d9a4d3249204        hyperledger/fabric-peer         "sh -c 'sleep 5; peer"   12 
 6a490fc1e772        hyperledger/fabric-membersrvc   "membersrvc"             12 minutes ago      Up 12 minutes       0.0.0.0:7054->7054/tcp                                                   hyperledger_membersrvc_1
 ```
 
-Here is our genesis block.
+### Here is our genesis block.
 ```
 [root@centos72 hyperledger]# curl localhost:7050/chain
 {"height":1,"currentBlockHash":"RrndKwuojRMjOz/rdD7rJD/NUupiuBuCtQwnZG7Vdi/XXcTd2MDyAMsFAZ1ntZL2/IIcSUeatIZAKS6ss7fEvg=="}
