@@ -19,7 +19,7 @@ vp0:
     - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
     - CORE_SECURITY_ENABLED=true
     - CORE_SECURITY_ENROLLID=test_vp0
-    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupb0
+    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupbT
   links:
     - membersrvc
   command: sh -c "sleep 5; peer node start --peer-chaincodedev"
@@ -39,7 +39,7 @@ vp1:
     - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
     - CORE_SECURITY_ENABLED=true
     - CORE_SECURITY_ENROLLID=test_vp1
-    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupb1
+    - CORE_SECURITY_ENROLLSECRET=5wgHK9qqYaPy
   links:
     - membersrvc
   command: sh -c "sleep 5; peer node start --peer-chaincodedev"
@@ -59,7 +59,7 @@ vp2:
     - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
     - CORE_SECURITY_ENABLED=true
     - CORE_SECURITY_ENROLLID=test_vp2
-    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupb2
+    - CORE_SECURITY_ENROLLSECRET=vQelbRvja7cJ
   links:
     - membersrvc
   command: sh -c "sleep 5; peer node start --peer-chaincodedev"
@@ -79,7 +79,7 @@ vp3:
     - CORE_PEER_PKI_TLSCA_PADDR=membersrvc:7054
     - CORE_SECURITY_ENABLED=true
     - CORE_SECURITY_ENROLLID=test_vp3
-    - CORE_SECURITY_ENROLLSECRET=MwYpmSRjupb3
+    - CORE_SECURITY_ENROLLSECRET=9LKqKH5peurL
   links:
     - membersrvc
   command: sh -c "sleep 5; peer node start --peer-chaincodedev"
