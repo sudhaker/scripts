@@ -99,18 +99,17 @@ docker pull nginx:alpine
 docker run -d --restart=unless-stopped -p 8081:80 -v /opt/dcos-setup/genconf/serve:/usr/share/nginx/html:ro --name=dcos-bootstrap-nginx nginx:alpine
 ```
 
-### To be run for {master}
-
-```
-mkdir -p /tmp/dcos && cd /tmp/dcos && curl -O http://mesos-single:8081/dcos_install.sh && bash dcos_install.sh master && cd -
-```
 ### To be run for {master+slave} in one-shot (undocumented feature) - option #1
 ```
 mkdir -p /tmp/dcos && cd /tmp/dcos && curl -O http://mesos-single:8081/dcos_install.sh && bash dcos_install.sh master slave && cd -
 ```
 
-### To be run for {slave} - option #2
+### To be run for {master} - option #2
+```
+mkdir -p /tmp/dcos && cd /tmp/dcos && curl -O http://mesos-single:8081/dcos_install.sh && bash dcos_install.sh master && cd -
+```
 
+### To be run for {slave} - option #2
 ```
 export opt_mesos=$(ls -1d /opt/mesosphere/packages/mesos--*)
 ln -s $opt_mesos/dcos.target.wants_slave/dcos-mesos-slave.service /etc/systemd/system
