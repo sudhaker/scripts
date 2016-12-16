@@ -104,21 +104,26 @@ docker run -d --restart=unless-stopped -p 8081:80 -v /opt/dcos-setup/genconf/ser
 ```
 mkdir -p /tmp/dcos && cd /tmp/dcos && curl -O http://mesos-single:8081/dcos_install.sh && bash dcos_install.sh master && cd -
 ```
-**Install dcos-cli** (while we are waiting for master to come up).
+### To be run for {master+slave} in one-shot (undocumented feature) - option #1
 ```
-mkdir -p ~/bin && cd ~/bin && curl -O https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos && chmod 755 ~/bin/dcos && cd -
- 
-dcos config set core.dcos_url http://192.168.0.173
-dcos auth login
+mkdir -p /tmp/dcos && cd /tmp/dcos && curl -O http://mesos-single:8081/dcos_install.sh && bash dcos_install.sh master slave && cd -
 ```
 
-### To be run for {slave}
+### To be run for {slave} - option #2
 
 ```
 export opt_mesos=$(ls -1d /opt/mesosphere/packages/mesos--*)
 ln -s $opt_mesos/dcos.target.wants_slave/dcos-mesos-slave.service /etc/systemd/system
 ln -s $opt_mesos/dcos.target.wants_slave/dcos-mesos-slave.service /etc/systemd/system/dcos.target.wants
 systemctl start dcos-mesos-slave
+```
+
+**Install dcos-cli** (while we are waiting for master to come up).
+```
+mkdir -p ~/bin && cd ~/bin && curl -O https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos && chmod 755 ~/bin/dcos && cd -
+ 
+dcos config set core.dcos_url http://192.168.0.173
+dcos auth login
 ```
 
 ### Install the tiny marathon-lb (0.1 CPU, 128mb RAM)
