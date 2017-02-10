@@ -35,10 +35,7 @@ part / --size 3000 --fstype ext4
 # Package setup
 %packages --excludedocs --instLangs=en --nocore
 -*firmware
-rootfiles
-systemd
 passwd
-yum
 yum-plugin-ovl
 vim-minimal
 bash
@@ -58,7 +55,7 @@ rpm -e kernel
 
 yum -y autoremove acl ebtables firewalld freetype grubby initscripts iproute iptables \
   libmnl libnetfilter_conntrack libnfnetlink libselinux-python linux-firmware \
-  python-decorator python-slip python-slip-dbus snappy sysvinit-tools which 
+  passwd python-decorator python-slip python-slip-dbus snappy sysvinit-tools which 
 
 yum clean all
 
