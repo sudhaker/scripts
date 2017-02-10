@@ -35,7 +35,6 @@ part / --size 3000 --fstype ext4
 # Package setup
 %packages --excludedocs --instLangs=en --nocore
 -*firmware
-passwd
 yum-plugin-ovl
 vim-minimal
 bash
@@ -45,9 +44,6 @@ bash
 %post
 
 # Post configure tasks for Docker
-
-# Lock roots account, keep roots account password-less.
-passwd -l root
 
 # remove stuff we don't need that anaconda insists on
 # kernel needs to be removed by rpm, because of grubby
