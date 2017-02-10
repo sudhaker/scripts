@@ -51,7 +51,7 @@ rpm -e kernel
 
 yum -y autoremove acl ebtables firewalld freetype grubby initscripts iproute iptables \
   libmnl libnetfilter_conntrack libnfnetlink libselinux-python linux-firmware \
-  passwd python-decorator python-slip python-slip-dbus snappy sysvinit-tools which 
+  python-decorator python-slip python-slip-dbus sysvinit-tools which 
 
 yum clean all
 
